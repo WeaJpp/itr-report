@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ITR Report</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0E141C;color:#ECEAE3;font-family:'Segoe UI',system-ui,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;background-image:radial-gradient(1200px 600px at 80% -10%,rgba(11,42,74,.55),transparent 60%)}
+.box{background:rgba(21,32,46,.95);border:1px solid #27384D;padding:48px 40px;text-align:center;max-width:380px;width:90%}
+.box::after{content:'';display:block;position:absolute;inset:20px;border:1px solid rgba(197,165,114,.30);pointer-events:none}
+h1{font-size:28px;font-weight:900;letter-spacing:2px;margin-bottom:8px}
+h1 span{color:#C5A572}
+.sub{font-size:12px;color:#6E7E90;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:32px}
+input{width:100%;padding:14px 16px;background:#0B1119;border:1px solid #27384D;color:#ECEAE3;font-size:15px;font-family:inherit;outline:none;text-align:center;letter-spacing:4px;transition:border-color .2s}
+input:focus{border-color:#C5A572}
+input::placeholder{letter-spacing:1px;color:#6E7E90}
+button{width:100%;margin-top:16px;padding:14px;background:#C5A572;color:#0E141C;border:none;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:background .2s}
+button:hover{background:#E4CE9E}
+.err{color:#D2605F;font-size:13px;margin-top:16px;min-height:20px}
+</style>
+</head>
+<body>
+<div class="box" style="position:relative">
+  <h1>ITR <span>REPORT</span></h1>
+  <div class="sub">P2216 / P2225 · GQC Inspection Records</div>
+  <form id="f" onsubmit="return check()">
+    <input type="password" id="pw" placeholder="Password" autofocus autocomplete="off">
+    <button type="submit">Enter</button>
+  </form>
+  <div class="err" id="err"></div>
+</div>
+<script>
+var lang = navigator.language || navigator.userLanguage || '';
+var target = lang.startsWith('zh') ? 'ITR_Status_Report_v3.html' : 'ITR_Status_Report_v3_EN.html';
+var pwd = atob('MTE0NTE='); // 11451
+function check() {
+  var v = document.getElementById('pw').value;
+  if (v === pwd) {
+    sessionStorage.setItem('itr_ok', '1');
+    window.location.href = target;
+  } else {
+    document.getElementById('err').textContent = 'Wrong password';
+    document.getElementById('pw').value = '';
+    document.getElementById('pw').focus();
+  }
+  return false;
+}
+// 已验证过直接跳
+if (sessionStorage.getItem('itr_ok') === '1') window.location.href = target;
+</script>
+</body>
+</html>
